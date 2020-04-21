@@ -1,6 +1,6 @@
 package com.example.cc01;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.Api;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.Optional;
 
+@Api
 @Component
 @Path("/books")
 @Produces(MediaType.APPLICATION_JSON)

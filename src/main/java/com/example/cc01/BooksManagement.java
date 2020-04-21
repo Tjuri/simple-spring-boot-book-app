@@ -17,7 +17,7 @@ public class BooksManagement {
     public void fillBooks() {
         this.books.add(new Book("Herr der Ringe", "Tolkien", "34545"));
         this.books.add(new Book("Clean Code", "Martin", "1234"));
-        this.books.add(new Book("Marokko - der Süden", "Buchholz", "34545"));
+        this.books.add(new Book("Marokko - der Süden", "Buchholz", "32313"));
     }
 
     public Optional<Book> getByIsdn(String isdn) {
