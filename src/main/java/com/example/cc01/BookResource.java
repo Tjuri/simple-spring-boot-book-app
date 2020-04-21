@@ -7,6 +7,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
+import java.util.Optional;
 
 @Component
 @Path("/books")
@@ -15,24 +16,26 @@ public class BookResource {
 
     BooksManagement bookshelf = new BooksManagement();
 
-//    @GET
-//    @Produces(MediaType.TEXT_PLAIN)
-//    public String getIt() {
-//        return "Got it!";
-//    }
-
     @GET
     public Response books(@QueryParam("title") String title) {
         Collection<Book> books = bookshelf.getByTitle(title);
-        return Response.ok(books).build();
+        if (books != null) {
+            return Response.ok(books).build();
+        } else {
+            return Response.status(404).entity("Not Found").build();
+        }
     }
 
     @GET
     @Path("/{isbn}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response byIsbn(@PathParam("isbn") String isbn) {
-        Book book = bookshelf.getByIsdn(isbn);
-        return Response.ok(book).build();
+        Optional<Book> book = bookshelf.getByIsdn(isbn);
+        if (book.isPresent()) {
+            return Response.ok(book.get()).build();
+        } else {
+            return Response.status(404).entity("Not Found").build();
+        }
     }
 
 }

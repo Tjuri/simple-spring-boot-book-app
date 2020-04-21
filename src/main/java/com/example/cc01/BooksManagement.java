@@ -2,6 +2,8 @@ package com.example.cc01;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class BooksManagement {
 
@@ -18,25 +20,18 @@ public class BooksManagement {
         this.books.add(new Book("Marokko - der Süden", "Buchholz", "34545"));
     }
 
-    public Book getByIsdn(String isdn) {
-        for (Iterator<Book> iterator = books.iterator(); iterator.hasNext(); ) {
-            Book book = iterator.next();
-            if (book.getIsbn() == isdn) {
-                return book;
-            }
-        }
-        return null;
+    public Optional<Book> getByIsdn(String isdn) {
+        return this.books
+                .stream()
+                .filter(book -> book.getIsbn().contains(isdn))
+                .findFirst();
     }
 
     public ArrayList<Book> getByTitle(String title) {
-        ArrayList<Book> foundBooks = new ArrayList<Book>();
 
-        for (Iterator<Book> iterator = books.iterator(); iterator.hasNext(); ) {
-            Book book = iterator.next();
-            if (book.getTitle() == title) {
-                foundBooks.add(book);
-            }
-        }
-        return foundBooks;
+        return this.books
+                .stream()
+                .filter(book -> book.getTitle().contains(title))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
